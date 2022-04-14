@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>principal</title>
+</head>
+<body>
+    {% with mensaje = get_flashed_messages() %}
+    {% if mensaje %}
+    {% for i in mensaje %}
+        <p>{{mensaje}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form action="/añadir_contacto" method="post">
+        <input type="text" name="nombre" placeholder="nombre">
+        <input type="text" name="telefono" placeholder="telefono">
+        <input type="text" name="email" placeholder="email">
+        <button type="submit">guardar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>nombre</td>
+                <td>telefono</td>
+                <td>email</td>
+                <td>procesos</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in contactos %}
+            <tr>
+                <td>{{i.0}}</td>
+                <td>{{i.1}}</td>
+                <td>{{i.2}}</td>
+                <td>{{i.3}}</td>
+                <td><a href="/editar_contacto/{{i.0}}">editar</a>
+                <a href="/eliminar_contacto/{{i.0}}">eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

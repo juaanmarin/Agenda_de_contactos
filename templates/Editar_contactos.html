@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editar contacto</title>
+</head>
+<body>
+    <form action="/editar/{{contacto.0}}" method="post">
+        <input type="text" name="nombre" placeholder="nombre" value="{{contacto.1}}">
+        <input type="text" name="telefono" placeholder="telefono" value="{{contacto.2}}">
+        <input type="text" name="email" placeholder="email" value="{{contacto.3}}">
+        <button type="submit">editar</button>
+    </form>
+</body>
+</html>
