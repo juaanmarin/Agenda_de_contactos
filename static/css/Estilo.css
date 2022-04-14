@@ -1,0 +1,71 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+body{
+    background: linear-gradient(to left, rgb(255, 38, 0), rgb(255, 247, 0));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+ section{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     gap: 30px;
+}
+table{
+    width: 500px;
+    border: 3px solid black;
+}
+th{
+    height: 50px;
+    font-size: 20px;
+    border: 2px solid black;
+} 
+td{
+    height: 50px;
+    font-size: 30px;
+    border: 2px solid black;
+}
+.botones{
+    display: flex;
+    align-items:center;
+    gap: 10px;
+}
+.eliminar{
+    border-radius: 20px;
+    height: 20px;
+    width: 90px;
+    background: linear-gradient(to left, aqua, rgb(195, 255, 0));
+}
+.editar {
+    border-radius: 20px;
+    height: 20px;
+    width: 90px;
+    background: linear-gradient(to left, aqua, rgb(195, 255, 0)); background-color: red;
+}
+
+input{
+    font-size: 20px;
+    width: 200px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+}
+button{
+    background: linear-gradient(to right, rgb(255, 38, 0), rgb(255, 247, 0));
+    width: 150px;
+    height: 40px;
+    border: none;
+    font-size: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}

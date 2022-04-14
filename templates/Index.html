@@ -4,45 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/Estilo.css">
     <title>principal</title>
 </head>
 <body>
-    {% with mensaje = get_flashed_messages() %}
-    {% if mensaje %}
-    {% for i in mensaje %}
-        <p>{{mensaje}}</p>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <form action="/añadir_contacto" method="post">
-        <input type="text" name="nombre" placeholder="nombre">
-        <input type="text" name="telefono" placeholder="telefono">
-        <input type="text" name="email" placeholder="email">
-        <button type="submit">guardar</button>
-    </form>
+    <header>
+        <h1>agenda de contactos</h1>
+    </header>
+    <nav>
+        {% with mensaje = get_flashed_messages() %}
+        {% if mensaje %}
+        {% for i in mensaje %}
+            <p>{{mensaje}}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </nav>
+    <section>
+        <div class="formulario">
+            <form action="/añadir_contacto" method="post">
+                <input type="text" name="nombre" placeholder="nombre">
+                <input type="text" name="telefono" placeholder="telefono">
+                <input type="text" name="email" placeholder="email">
+                <button type="submit">guardar</button>
+            </form>
+        </div>
+        <div class="tabla">{
+            <table>
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>nombre</td>
+                        <td>telefono</td>
+                        <td>email</td>
+                        <td>procesos</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in contactos %}
+                    <tr>
+                        <th>{{i.0}}</th>
+                        <th>{{i.1}}</th>
+                        <th>{{i.2}}</th>
+                        <th>{{i.3}}</th>
+                        <th class="botones"><a href="/editar_contacto/{{i.0}}"><button class="editar">editar</button></a>
+                        <a href="/eliminar_contacto/{{i.0}}"><button class="eliminar">eliminar</button></a></th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </section>
 
-    <table>
-        <thead>
-            <tr>
-                <td>id</td>
-                <td>nombre</td>
-                <td>telefono</td>
-                <td>email</td>
-                <td>procesos</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in contactos %}
-            <tr>
-                <td>{{i.0}}</td>
-                <td>{{i.1}}</td>
-                <td>{{i.2}}</td>
-                <td>{{i.3}}</td>
-                <td><a href="/editar_contacto/{{i.0}}">editar</a>
-                <a href="/eliminar_contacto/{{i.0}}">eliminar</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </body>
 </html>
