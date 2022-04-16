@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect,url_for, flash
 from flask_mysqldb import MySQL
+from Logica import *
+
+gestion=Logica
 
 app=Flask(__name__)
 
@@ -14,9 +17,11 @@ app.secret_key = "mysesion"
 
 @app.route("/")
 def index():
-    cur= mysql.connection.cursor()
-    cur.execute("select * from agenda_contactos.contactos;")
-    data = cur.fetchall()
+    data=gestion.iniciar(mysql)
+    
+    # cur= mysql.connection.cursor()
+    # cur.execute("select * from agenda_contactos.contactos;")
+    # data = cur.fetchall()
     return render_template("index.html", contactos=data)
 
 @app.route("/añadir_contacto", methods=["POST"])
@@ -25,39 +30,45 @@ def añadir_contacto():
         nombre=request.form["nombre"]
         numero=request.form["telefono"]
         email=request.form["email"]
-        cur=mysql.connection.cursor()
-        cur.execute("insert into contactos (nombre, telefono, email) values (%s, %s, %s)", (nombre,numero,email))
-        mysql.connection.commit()
+        gestion.añadirContactos(mysql,nombre,numero,email)
+        # cur=mysql.connection.cursor()
+        # cur.execute("insert into contactos (nombre, telefono, email) values (%s, %s, %s)", (nombre,numero,email))
+        # mysql.connection.commit()
         flash("contacto registrado")
     return redirect(url_for("index"))
 
 @app.route("/editar_contacto/<id>")
 def editar_contacto(id):
-    cur=mysql.connection.cursor()
-    cur.execute("select * from contactos where id=(%s)", (id,))
-    dato=cur.fetchall()
+    dato=gestion.obtenerContacto(mysql,id)
+
+    # cur=mysql.connection.cursor()
+    # cur.execute("select * from contactos where id=(%s)", (id,))
+    # dato=cur.fetchall()
     return render_template("Editar_contactos.html", contacto=dato[0])
 
 @app.route("/editar/<id>", methods=["POST"])
 def editar_contactos(id):
-    print("***************")
     if(request.method=="POST"):
         nombre=request.form["nombre"]
         numero=request.form["telefono"]
         email=request.form["email"]
-        cur=mysql.connection.cursor()
-        cur.execute("update contactos set nombre=(%s), telefono=(%s), email=(%s) where id=(%s)",(nombre,numero,email,id))
+
+        gestion.editar(mysql,nombre,numero,email,id)
+
+        # cur=mysql.connection.cursor()
+        # cur.execute("update contactos set nombre=(%s), telefono=(%s), email=(%s) where id=(%s)",(nombre,numero,email,id))
         flash("contacto actualizado")
-        mysql.connection.commit()
-        print("***************")
+        # mysql.connection.commit()
         return redirect(url_for("index"))
 
 @app.route("/eliminar_contacto/<string:id>")
 def eliminar_contacto(id):
-    cur=mysql.connection.cursor()
-    cur.execute("delete from contactos where id=(%s)", (id,))
-    #cur.execute("delete from contactos where id={0}", format(id))
-    mysql.connection.commit()
+
+    gestion.eliminar(mysql,id)
+
+    # cur=mysql.connection.cursor()
+    # cur.execute("delete from contactos where id=(%s)", (id,))
+    # mysql.connection.commit()
     flash("contacto eliminado")
     return redirect(url_for("index"))
 
